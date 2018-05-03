@@ -22,5 +22,5 @@ deploy:
   app: java-ttt
   on:
     repo: klkelley/tictactoe-web-app
-    branch: walking-skeleton
+    branch: master
 
