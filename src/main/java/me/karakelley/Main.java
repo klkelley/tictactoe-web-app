@@ -13,7 +13,7 @@ public class Main {
   public static void main(String[] args) {
     Map<String, String> argsHash = new CommandLineArguments().parse(args, new SystemExit());
     ServerConfiguration serverConfiguration = new ServerConfiguration();
-    serverConfiguration.setPort(argsHash.get("port"));
+    serverConfiguration.setPort("5000");
 
     Router router = new Router()
             .route(new MethodAndExactPathMatcher(HttpMethod.GET, "/"), new GameHandler());
