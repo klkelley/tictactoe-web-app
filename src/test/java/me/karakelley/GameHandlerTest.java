@@ -27,7 +27,7 @@ public class GameHandlerTest {
 
     String request = "GET / HTTP/1.1\r\n\r\n";
     List<String> response = client.sendMessage(request);
-    assertTrue(response.contains("HTTP/1.1 sdf OK"));
+    assertTrue(response.contains("HTTP/1.1 200 OK"));
   }
 
   private void startOnNewThread(HttpServer httpServer) {
