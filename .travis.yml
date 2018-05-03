@@ -14,8 +14,8 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 
-deploy.skip_cleanup: true
 deploy:
+  skip_cleanup: true
   provider: heroku
   api_key:
     secure: uSzDqcPdXSKEptpJhLHcUgs0xHWnD5JIvK/7J2aSyR9PaMGEfEf+3Y6FsrfuwoW3FycaQVIITCSLZbCz+/a+SUDWmTX5kCwz68diN+RAAUOAnW7lde32mPZaVyoCclwbLeTmRPQiksk/sIAIVRWbbDZvnV+O0U9jcLzO7ZtehMXJhDJeRjwViRRNXAlIlEgXZS+kWpA08GLtw6iEQh3IZ6O0Lul/KLdQkzUCla9Pk6ExjkM3poF7N83Ub32c8YOJFbHETvS3+DRAB6Hd3tAZfCjL21dpJCghcYxQXGIxeS2jHgxjlyHBypyR3buDZLm3tEH/MjLTh36zbUra6vMvDSaOqKPNmJh/A9VAhuxGWyiueqIAegPc1u4uaZwD8Jr28hrnJJSDObSGEZMfdinX//YkveXRkJrZj3Y1t3Hi0QkjQRIQbAUCK0SNFu4Ytx97XkOyfV2OGU86ebGF543AeEUiYjy/IgNE3qbWRa4Y9PzHXLgDQYWLyuPlTImUmOOAzkF7P2HAnvmm8xZrL+eaIDECk4zYXWtxCLkr0VLpNVdlt7Rt9H0vd4dUnk0pc4+oE1a256+5JX2fFlaiRTCdJrlFqoXO/aKorp2Y5zZysIbiIUaFePt0B8+0i4jlWBbvKZWaiu+EpuOrhMuNSGLOjg9bk56MDu5JJG1Mg8Vdi7c=
