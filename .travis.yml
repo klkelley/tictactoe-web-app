@@ -1,18 +1,23 @@
 language: java
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 before_install:
-  # Download desired version of Gradle
-  - wget http://services.gradle.org/distributions/gradle-4.6-bin.zip
-  - unzip -qq gradle-4.6-bin.zip
-  - export GRADLE_HOME=$PWD/gradle-4.6
-  - export PATH=$GRADLE_HOME/bin:$PATH
-
+- wget http://services.gradle.org/distributions/gradle-4.6-bin.zip
+- unzip -qq gradle-4.6-bin.zip
+- export GRADLE_HOME=$PWD/gradle-4.6
+- export PATH=$GRADLE_HOME/bin:$PATH
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
+deploy:
+  provider: heroku
+  api_key:
+    secure: uSzDqcPdXSKEptpJhLHcUgs0xHWnD5JIvK/7J2aSyR9PaMGEfEf+3Y6FsrfuwoW3FycaQVIITCSLZbCz+/a+SUDWmTX5kCwz68diN+RAAUOAnW7lde32mPZaVyoCclwbLeTmRPQiksk/sIAIVRWbbDZvnV+O0U9jcLzO7ZtehMXJhDJeRjwViRRNXAlIlEgXZS+kWpA08GLtw6iEQh3IZ6O0Lul/KLdQkzUCla9Pk6ExjkM3poF7N83Ub32c8YOJFbHETvS3+DRAB6Hd3tAZfCjL21dpJCghcYxQXGIxeS2jHgxjlyHBypyR3buDZLm3tEH/MjLTh36zbUra6vMvDSaOqKPNmJh/A9VAhuxGWyiueqIAegPc1u4uaZwD8Jr28hrnJJSDObSGEZMfdinX//YkveXRkJrZj3Y1t3Hi0QkjQRIQbAUCK0SNFu4Ytx97XkOyfV2OGU86ebGF543AeEUiYjy/IgNE3qbWRa4Y9PzHXLgDQYWLyuPlTImUmOOAzkF7P2HAnvmm8xZrL+eaIDECk4zYXWtxCLkr0VLpNVdlt7Rt9H0vd4dUnk0pc4+oE1a256+5JX2fFlaiRTCdJrlFqoXO/aKorp2Y5zZysIbiIUaFePt0B8+0i4jlWBbvKZWaiu+EpuOrhMuNSGLOjg9bk56MDu5JJG1Mg8Vdi7c=
+  app: tictactoe-web-app
+  on:
+    repo: klkelley/tictactoe-web-app
+    branch: walking-skeleton
