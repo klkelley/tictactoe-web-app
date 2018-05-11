@@ -36,6 +36,7 @@ public class GameHandler implements Handler {
       jsonData.put("board", board);
       jsonData.put("winner", parser.winner(board));
       jsonData.put("tie", parser.tie(board));
+      jsonData.put("winningPlayer", parser.winningPlayer(board));
     } catch (JSONException e) {
       throw new RuntimeException(e);
     }
