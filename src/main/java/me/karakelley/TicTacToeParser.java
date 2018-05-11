@@ -9,7 +9,7 @@ public class TicTacToeParser {
 
   private final IFn require = Clojure.var("clojure.core", "require");
   private final IFn vector = Clojure.var("clojure.core", "vec");
-  private final IFn computerMove = Clojure.var("tictactoe.random-ai", "get-computer-move");
+  private final IFn computerMove = Clojure.var("tictactoe.ai", "get-computer-move");
   private final IFn board = Clojure.var("tictactoe.board", "place-move");
   private final IFn winnerExists = Clojure.var("tictactoe.board", "winner?");
   private final IFn tie = Clojure.var("tictactoe.board", "tie?");
@@ -38,7 +38,7 @@ public class TicTacToeParser {
   }
 
   private Object getComputerMove(Object newBoard) {
-    require.invoke(Clojure.read("tictactoe.random-ai"));
+    require.invoke(Clojure.read("tictactoe.ai"));
     Object updatedBoard = getVector(newBoard);
     Object move = computerMove.invoke(newBoard, "O", "X");
     return board.invoke(move, "O", updatedBoard);
