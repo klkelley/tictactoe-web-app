@@ -34,9 +34,8 @@ public class GameHandler implements Handler {
     JSONObject jsonData = new JSONObject();
     try {
       jsonData.put("board", board);
-      jsonData.put("winner", parser.winner(board));
-      jsonData.put("tie", parser.tie(board));
-      jsonData.put("winningPlayer", parser.winningPlayer(board));
+      jsonData.put("gameState", parser.gameOver(board));
+      jsonData.put("gameResults", parser.winningMessage(board));
     } catch (JSONException e) {
       throw new RuntimeException(e);
     }
