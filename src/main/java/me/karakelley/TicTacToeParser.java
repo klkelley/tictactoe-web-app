@@ -35,7 +35,10 @@ public class TicTacToeParser {
 
   public String winningMessage(Object board) {
     require.invoke(Clojure.read("tictactoe.board"));
-    return (String) gameResults.invoke(board);
+    if (gameOver(board)) {
+      return (String) gameResults.invoke(board);
+    }
+    return null;
   }
 
   public Boolean gameOver(Object board) {

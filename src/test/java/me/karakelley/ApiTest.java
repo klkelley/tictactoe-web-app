@@ -42,7 +42,8 @@ class ApiTest {
     String moves = "{\"board\":[X,null,null,null,O,null,null,null,null],\"spot\":1}";
     String request = "POST /move HTTP/1.1\r\nContent-Length: 59\r\nContent-Type: application/json\r\n\r\n" + moves;
     List<String> response = client.sendMessage(request);
-    assertTrue(response.get(5).contains("{\"gameResults\":\"Its a tie!\",\"gameState\":false"));
+    System.out.println(response);
+    assertTrue(response.get(5).contains("{\"gameState\":false"));
   }
 
   @Test
