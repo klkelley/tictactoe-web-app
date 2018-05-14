@@ -18,7 +18,6 @@ public class TicTacToeParser {
   private final IFn board = Clojure.var("tictactoe.board", "place-move");
   private final IFn winnerExists = Clojure.var("tictactoe.board", "winner?");
   private final IFn tie = Clojure.var("tictactoe.board", "tie?");
-  private final IFn winningMarker = Clojure.var("tictactoe.board", "winner");
   private final IFn gameResults = Clojure.var("tictactoe.board", "game-results");
 
   public Object placeMoves(String body) throws JSONException {
@@ -36,10 +35,7 @@ public class TicTacToeParser {
 
   public String winningMessage(Object board) {
     require.invoke(Clojure.read("tictactoe.board"));
-    if (tie(board)) {
-      return (String) gameResults.invoke(board);
-    }
-    return String.valueOf(gameResults.invoke(board));
+    return (String) gameResults.invoke(board);
   }
 
   public Boolean gameOver(Object board) {
@@ -92,7 +88,6 @@ public class TicTacToeParser {
         gameBoard.add(i, String.valueOf(board.get(i)));
       }
     }
-
     return gameBoard;
   }
 }
