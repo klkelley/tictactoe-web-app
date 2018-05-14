@@ -13,7 +13,8 @@ public class TicTacToeParser {
   private final IFn board = Clojure.var("tictactoe.board", "place-move");
   private final IFn winnerExists = Clojure.var("tictactoe.board", "winner?");
   private final IFn tie = Clojure.var("tictactoe.board", "tie?");
-  private final IFn winningPlayer = Clojure.var("tictactoe.board", "game-results");
+  private final IFn winningMarker = Clojure.var("tictactoe.board", "winner");
+  private final IFn gameResults = Clojure.var("tictactoe.board", "game-results");
 
   public Object placeMoves(String body) throws JSONException {
     Object gameBoard = parseBoard(body);
@@ -22,10 +23,22 @@ public class TicTacToeParser {
     Object vectorBoard = getVector(gameBoard);
     Object boardWithNewMoves = placeMove(spot, vectorBoard);
 
-    if (!winner(boardWithNewMoves) && !tie(boardWithNewMoves)) {
+    if (!gameOver(boardWithNewMoves)) {
       return getComputerMove(boardWithNewMoves);
     }
     return boardWithNewMoves;
+  }
+
+  public String winningMessage(Object board) {
+    require.invoke(Clojure.read("tictactoe.board"));
+    if (tie(board)) {
+      return (String) gameResults.invoke(board);
+    }
+    return winningPlayer((String) winningMarker.invoke(board));
+  }
+
+  public Boolean gameOver(Object board) {
+    return winner(board) || tie(board);
   }
 
   private Object getVector(Object gameBoard) {
@@ -44,17 +57,16 @@ public class TicTacToeParser {
     return board.invoke(move, "O", updatedBoard);
   }
 
-  public Boolean winner(Object board) {
+  private Boolean winner(Object board) {
     return (Boolean) winnerExists.invoke(board);
   }
 
-  public Boolean tie(Object board) {
+  private Boolean tie(Object board) {
     return (Boolean) tie.invoke(board);
   }
 
-  public String winningPlayer(Object board) {
-    require.invoke(Clojure.read("tictactoe.board"));
-    return (String) winningPlayer.invoke(board);
+  private String winningPlayer(String marker) {
+    return "Player " + marker + " Wins!";
   }
 
   private Object parseBoard(String data) throws JSONException {
