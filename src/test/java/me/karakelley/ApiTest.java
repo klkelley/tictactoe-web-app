@@ -25,11 +25,12 @@ class ApiTest {
     startOnNewThread(server);
     connectClient(server, client);
 
-    String moves = "{\"board\":[0,1,2,3,4,5,6,7,8],\"spot\":1}";
-    String request = "POST /move HTTP/1.1\r\nContent-Length: 38\r\nContent-Type: application/json\r\n\r\n" + moves;
+    String moves = "{\"board\":[null,null,null,null,null,null,null,null,null],\"spot\":1}";
+    String request = "POST /move HTTP/1.1\r\nContent-Length: 65\r\nContent-Type: application/json\r\n\r\n" + moves;
     List<String> response = client.sendMessage(request);
     assertTrue(response.contains("HTTP/1.1 200 OK"));
   }
+
 
   @Test
   void testSendsGameStatusInResponse() {
@@ -38,10 +39,10 @@ class ApiTest {
     startOnNewThread(server);
     connectClient(server, client);
 
-    String moves = "{\"board\":[X,1,2,3,O,5,6,7,8],\"spot\":1}";
-    String request = "POST /move HTTP/1.1\r\nContent-Length: 38\r\nContent-Type: application/json\r\n\r\n" + moves;
+    String moves = "{\"board\":[X,null,null,null,O,null,null,null,null],\"spot\":1}";
+    String request = "POST /move HTTP/1.1\r\nContent-Length: 59\r\nContent-Type: application/json\r\n\r\n" + moves;
     List<String> response = client.sendMessage(request);
-    assertTrue(response.get(5).contains("{\"gameResults\":\"Player null Wins!\",\"gameState\":false"));
+    assertTrue(response.get(5).contains("{\"gameResults\":\"Its a tie!\",\"gameState\":false"));
   }
 
   @Test
@@ -51,10 +52,10 @@ class ApiTest {
     startOnNewThread(server);
     connectClient(server, client);
 
-    String moves = "{\"board\":[X,X,X,3,O,5,6,7,8],\"spot\":1}";
-    String request = "POST /move HTTP/1.1\r\nContent-Length: 38\r\nContent-Type: application/json\r\n\r\n" + moves;
+    String moves = "{\"board\":[X,X,X,null,O,null,null,null,null],\"spot\":1}";
+    String request = "POST /move HTTP/1.1\r\nContent-Length: 53\r\nContent-Type: application/json\r\n\r\n" + moves;
     List<String> response = client.sendMessage(request);
-    assertTrue(response.get(5).contains("{\"gameResults\":\"Player X Wins!\",\"gameState\":true"));
+    assertTrue(response.get(5).contains("{\"gameResults\":\"Player X wins!\",\"gameState\":true"));
   }
 
   @Test
@@ -64,10 +65,10 @@ class ApiTest {
     startOnNewThread(server);
     connectClient(server, client);
 
-    String moves = "{\"board\":[O,O,O,3,O,5,6,7,8],\"spot\":8}";
-    String request = "POST /move HTTP/1.1\r\nContent-Length: 38\r\nContent-Type: application/json\r\n\r\n" + moves;
+    String moves = "{\"board\":[O,O,O,null,O,null,null,null,null],\"spot\":8}";
+    String request = "POST /move HTTP/1.1\r\nContent-Length: 53\r\nContent-Type: application/json\r\n\r\n" + moves;
     List<String> response = client.sendMessage(request);
-    assertTrue(response.get(5).contains("{\"gameResults\":\"Player O Wins!\",\"gameState\":true"));
+    assertTrue(response.get(5).contains("{\"gameResults\":\"Player O wins!\",\"gameState\":true"));
   }
 
   @Test
@@ -77,8 +78,8 @@ class ApiTest {
     startOnNewThread(server);
     connectClient(server, client);
 
-    String moves = "{\"board\":[X,O,X,X,O,X,O,7,O],\"spot\":7}";
-    String request = "POST /move HTTP/1.1\r\nContent-Length: 38\r\nContent-Type: application/json\r\n\r\n" + moves;
+    String moves = "{\"board\":[X,O,X,X,O,X,O,null,O],\"spot\":7}";
+    String request = "POST /move HTTP/1.1\r\nContent-Length: 41\r\nContent-Type: application/json\r\n\r\n" + moves;
     List<String> response = client.sendMessage(request);
     assertTrue(response.get(5).contains("{\"gameResults\":\"Its a tie!\",\"gameState\":true"));
   }

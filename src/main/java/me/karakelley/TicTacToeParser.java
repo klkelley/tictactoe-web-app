@@ -2,13 +2,18 @@ package me.karakelley;
 
 import clojure.java.api.Clojure;
 import clojure.lang.IFn;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TicTacToeParser {
 
   private final IFn require = Clojure.var("clojure.core", "require");
   private final IFn vector = Clojure.var("clojure.core", "vec");
+  private final IFn toSymbol = Clojure.var("clojure.core", "symbol");
   private final IFn computerMove = Clojure.var("tictactoe.ai", "get-computer-move");
   private final IFn board = Clojure.var("tictactoe.board", "place-move");
   private final IFn winnerExists = Clojure.var("tictactoe.board", "winner?");
@@ -34,7 +39,7 @@ public class TicTacToeParser {
     if (tie(board)) {
       return (String) gameResults.invoke(board);
     }
-    return winningPlayer((String) winningMarker.invoke(board));
+    return String.valueOf(gameResults.invoke(board));
   }
 
   public Boolean gameOver(Object board) {
@@ -47,14 +52,14 @@ public class TicTacToeParser {
 
   private Object placeMove(Object spot, Object vectorBoard) {
     require.invoke(Clojure.read("tictactoe.board"));
-    return board.invoke(spot, "X", vectorBoard);
+    return board.invoke(spot, toSymbol("X"), vectorBoard);
   }
 
   private Object getComputerMove(Object newBoard) {
     require.invoke(Clojure.read("tictactoe.ai"));
     Object updatedBoard = getVector(newBoard);
-    Object move = computerMove.invoke(newBoard, "O", "X");
-    return board.invoke(move, "O", updatedBoard);
+    Object move = computerMove.invoke(newBoard, toSymbol("O"), toSymbol("X"));
+    return board.invoke(move, toSymbol("O"), updatedBoard);
   }
 
   private Boolean winner(Object board) {
@@ -65,15 +70,29 @@ public class TicTacToeParser {
     return (Boolean) tie.invoke(board);
   }
 
-  private String winningPlayer(String marker) {
-    return "Player " + marker + " Wins!";
+  private List<String> parseBoard(String data) throws JSONException {
+    return constructGameBoard((JSONArray) new JSONObject(data).get("board"));
   }
 
-  private Object parseBoard(String data) throws JSONException {
-    return new JSONObject(data).get("board");
+  private Object toSymbol(String marker) {
+    return toSymbol.invoke(Clojure.read(marker));
   }
 
   private Object parseChosenSpot(String data) throws JSONException {
     return new JSONObject(data).get("spot");
+  }
+
+  private List<String> constructGameBoard(JSONArray board) throws JSONException {
+    List<String> gameBoard = new ArrayList<>();
+
+    for(int i = 0; i < board.length(); i++) {
+      if (board.get(i).toString().equals("null")) {
+        gameBoard.add(i, String.valueOf(i));
+      } else {
+        gameBoard.add(i, String.valueOf(board.get(i)));
+      }
+    }
+
+    return gameBoard;
   }
 }
